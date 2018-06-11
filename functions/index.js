@@ -64,3 +64,16 @@ exports.deleteItem = functions.https.onRequest((req, res) => {
     getItemsFromDatabase(res)
   })
 })
+
+exports.updateItem = functions.https.onRequest((req,res) => {
+  return cors(req,res,() =>{
+    if(req.method !== 'POST') {
+      return res.status(500).json({
+        message: 'Not allowed'
+      })
+    }
+    const item = req.body.item;
+    database.update({ item });
+    getItemsFromDatabase(res)
+  })
+})
